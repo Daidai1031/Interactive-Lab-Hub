@@ -235,6 +235,8 @@ pi@ixe00:~/Interactive-Lab-Hub/Lab 3 $ python server.py
 From a remote browser on the same network, check to make sure your webserver is working by going to `http://<YourPiIPAddress>:5000`. You should be able to see "Hello World" on the webpage.
 
 
+### Storyboard
+
 **Concept at a glance**
 
 Who: busy student/professional who often forgets a daily pill.
@@ -244,8 +246,6 @@ What: voice device with one big confirm button + LED ring + small display (optio
 Why: reduce missed doses; make adherence quick and friendly without opening an app.
 
 Storyboard and/or use a Verplank diagram to design a speech-enabled device. (Stuck? Make a device that talks for dogs. If that is too stupid, find an application that is better than that.) 
-
-### Storyboard
 
 \*\***Post your storyboard and diagram here.**\*\*
 
@@ -349,6 +349,7 @@ Answer the following:
 ### How could you use your system to create a dataset of interaction? What other sensing modalities would make sense to capture?
 
 \*\**your answer here*\*\*
+
 
 
 
