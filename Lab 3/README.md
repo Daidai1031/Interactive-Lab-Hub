@@ -151,6 +151,8 @@ python faster_whisper_try.py
 
 Want to add intelligent conversation capabilities to your voice projects? **Ollama** lets you run AI models locally on your Raspberry Pi for sophisticated dialogue without requiring internet connectivity!
 
+<img width="1250" height="706" alt="2f612e8b3e5aabd9cfc730727e743a45" src="https://github.com/user-attachments/assets/06c76d93-8091-43d6-96b9-b40fa9cbca35" />
+
 #### Quick Start with Ollama
 
 **Installation** (takes ~5 minutes):
@@ -232,15 +234,44 @@ pi@ixe00:~/Interactive-Lab-Hub/Lab 3 $ python server.py
 ```
 From a remote browser on the same network, check to make sure your webserver is working by going to `http://<YourPiIPAddress>:5000`. You should be able to see "Hello World" on the webpage.
 
-### Storyboard
+
+**Concept at a glance**
+
+Who: busy student/professional who often forgets a daily pill.
+
+What: voice device with one big confirm button + LED ring + small display (optional). Local wake word (“Hey Remi”).
+
+Why: reduce missed doses; make adherence quick and friendly without opening an app.
 
 Storyboard and/or use a Verplank diagram to design a speech-enabled device. (Stuck? Make a device that talks for dogs. If that is too stupid, find an application that is better than that.) 
+
+### Storyboard
 
 \*\***Post your storyboard and diagram here.**\*\*
 
 Write out what you imagine the dialogue to be. Use cards, post-its, or whatever method helps you develop alternatives or group responses. 
 
+**Idea:** Lower the cognitive load of medication adherence.
+
+**Metaphor:** Gentle companion + kitchen timer that talks and listens.
+
+**Model:** Finite‑state reminder cycle per medication: Scheduled → Alerting → Waiting for Confirmation → (Snoozed/Repeat) → Done.
+
+**Display**: LED ring states (idle, listening, alerting), optional e‑ink line for text (“Yaz • 10:00”), simple chime.
+
+**Tasks:** Create/edit schedule; acknowledge dose; snooze/skip; check next dose; add meds.
+
+**Control:** Voice commands (“Hey Remi…”), one big confirm button, capacitive snooze tap (optional), physical mute switch.
+
 \*\***Please describe and document your process.**\*\*
+
+1. Set task: “Set Yaz reminder at 10:00 AM every day.” Device must confirm schedule.
+
+2. On‑time reminder (10:00): Chime + TTS: “It’s 10:00. Time to take Yaz.”
+
+3. Follow‑up (10:05): If no confirmation, ask: “Did you take Yaz yet?”
+
+4. Complete: User presses the large button or says “Yes, I took it,” device: “Great job — you’ve completed today’s dose. I’ll stop reminding.”
 
 ### Acting out the dialogue
 
@@ -256,6 +287,14 @@ https://github.com/user-attachments/assets/f6bf10c9-58b7-4280-8227-05b0e1fe490d
 In the [demo directory](./demo), you will find an example Wizard of Oz project. In that project, you can see how audio and sensor data is streamed from the Pi to a wizard controller that runs in the browser.  You may use this demo code as a template. By running the `app.py` script, you can see how audio and sensor data (Adafruit MPU-6050 6-DoF Accel and Gyro Sensor) is streamed from the Pi to a wizard controller that runs in the browser `http://<YouPiIPAddress>:5000`. You can control what the system says from the controller as well!
 
 \*\***Describe if the dialogue seemed different than what you imagined, or when acted out, when it was wizarded, and how.**\*\*
+
+**Chime before speech.** When we acted/wizarded it, a disembodied voice felt jarring, so we added a brief “ding” to cue attention.
+
+**Improve:** Precede TTS with a sub-second earcon (or ≤2s musical lead-in) and keep barge-in enabled so users can reply immediately, with volume auto-reduced during quiet hours.
+
+**Knowing when the user is done (endpointing). **The device hesitated to avoid cutting users off, creating awkward pauses.
+
+**Improve:** Combine a short silence threshold with intent confidence for a “soft end,” then wait ~200 ms for any continued speech before responding (cancel if speech resumes).
 
 # Lab 3 Part 2
 
@@ -310,6 +349,7 @@ Answer the following:
 ### How could you use your system to create a dataset of interaction? What other sensing modalities would make sense to capture?
 
 \*\**your answer here*\*\*
+
 
 
 
