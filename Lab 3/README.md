@@ -250,6 +250,9 @@ Storyboard and/or use a Verplank diagram to design a speech-enabled device. (Stu
 
 \*\***Post your storyboard and diagram here.**\*\*
 
+<img width="1024" height="1536" alt="image" src="https://github.com/user-attachments/assets/faad9d69-d240-4156-9ba2-e7ee63cd3d4a" />
+
+
 Write out what you imagine the dialogue to be. Use cards, post-its, or whatever method helps you develop alternatives or group responses. 
 
 
@@ -382,6 +385,7 @@ Answer the following:
 ### How could you use your system to create a dataset of interaction? What other sensing modalities would make sense to capture?
 
 \*\**your answer here*\*\*
+
 
 
 
