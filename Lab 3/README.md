@@ -316,11 +316,6 @@ https://github.com/user-attachments/assets/f6bf10c9-58b7-4280-8227-05b0e1fe490d
 
 \*\***Describe if the dialogue seemed different than what you imagined when it was acted out, and how.**\*\*
 
-### Wizarding with the Pi (optional)
-In the [demo directory](./demo), you will find an example Wizard of Oz project. In that project, you can see how audio and sensor data is streamed from the Pi to a wizard controller that runs in the browser.  You may use this demo code as a template. By running the `app.py` script, you can see how audio and sensor data (Adafruit MPU-6050 6-DoF Accel and Gyro Sensor) is streamed from the Pi to a wizard controller that runs in the browser `http://<YouPiIPAddress>:5000`. You can control what the system says from the controller as well!
-
-\*\***Describe if the dialogue seemed different than what you imagined, or when acted out, when it was wizarded, and how.**\*\*
-
 **Chime before speech.** When we acted/wizarded it, a disembodied voice felt jarring, so we added a brief “ding” to cue attention.
 
 **Improve:** Precede TTS with a sub-second earcon (or ≤2s musical lead-in) and keep barge-in enabled so users can reply immediately, with volume auto-reduced during quiet hours.
@@ -328,6 +323,11 @@ In the [demo directory](./demo), you will find an example Wizard of Oz project. 
 **Knowing when the user is done (endpointing). **The device hesitated to avoid cutting users off, creating awkward pauses.
 
 **Improve:** Combine a short silence threshold with intent confidence for a “soft end,” then wait ~200 ms for any continued speech before responding (cancel if speech resumes).
+
+### Wizarding with the Pi (optional)
+In the [demo directory](./demo), you will find an example Wizard of Oz project. In that project, you can see how audio and sensor data is streamed from the Pi to a wizard controller that runs in the browser.  You may use this demo code as a template. By running the `app.py` script, you can see how audio and sensor data (Adafruit MPU-6050 6-DoF Accel and Gyro Sensor) is streamed from the Pi to a wizard controller that runs in the browser `http://<YouPiIPAddress>:5000`. You can control what the system says from the controller as well!
+
+\*\***Describe if the dialogue seemed different than what you imagined, or when acted out, when it was wizarded, and how.**\*\*
 
 # Lab 3 Part 2
 
@@ -382,6 +382,7 @@ Answer the following:
 ### How could you use your system to create a dataset of interaction? What other sensing modalities would make sense to capture?
 
 \*\**your answer here*\*\*
+
 
 
 
