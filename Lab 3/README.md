@@ -252,6 +252,7 @@ Storyboard and/or use a Verplank diagram to design a speech-enabled device. (Stu
 
 Write out what you imagine the dialogue to be. Use cards, post-its, or whatever method helps you develop alternatives or group responses. 
 
+
 **Idea:** Lower the cognitive load of medication adherence.
 
 **Metaphor:** Gentle companion + kitchen timer that talks and listens.
@@ -264,6 +265,7 @@ Write out what you imagine the dialogue to be. Use cards, post-its, or whatever 
 
 **Control:** Voice commands (“Hey Remi…”), one big confirm button, capacitive snooze tap (optional), physical mute switch.
 
+
 \*\***Please describe and document your process.**\*\*
 
 1. Set task: “Set Yaz reminder at 10:00 AM every day.” Device must confirm schedule.
@@ -274,10 +276,40 @@ Write out what you imagine the dialogue to be. Use cards, post-its, or whatever 
 
 4. Complete: User presses the large button or says “Yes, I took it,” device: “Great job — you’ve completed today’s dose. I’ll stop reminding.”
 
+
 ### Acting out the dialogue
 
 Find a partner, and *without sharing the script with your partner* try out the dialogue you've designed, where you (as the device designer) act as the device you are designing.  Please record this interaction (for example, using Zoom's record feature).
 
+Dialogue Scripts
+
+**A) Setup (User creates a daily reminder)**
+
+D: “Hey Remi, set a medication reminder for Yaz at 10:00 AM every day.”
+
+D: “Okay. I’ll remind you to take Yaz at 10:00 AM daily. Start today?”
+
+U: “Yes.”
+
+D: “All set. I’ll chime at 10:00.”
+
+**B) On‑time reminder (10:00)**
+
+D (chime): “It’s 10:00. Time to take Yaz.”
+
+D (nudge): “Friendly reminder: Yaz time.”
+
+U: sleeping
+
+**C) Follow‑up (10:05)**
+
+Condition: no response by 10:05.
+
+D: “Quick check — did you take Yaz? You can press the button, say ‘Yes’, or say ‘Snooze’.”
+
+U: “Yes.”
+
+D: “Awesome. Marked complete.”
 
 https://github.com/user-attachments/assets/f6bf10c9-58b7-4280-8227-05b0e1fe490d
 
@@ -350,6 +382,7 @@ Answer the following:
 ### How could you use your system to create a dataset of interaction? What other sensing modalities would make sense to capture?
 
 \*\**your answer here*\*\*
+
 
 
 
