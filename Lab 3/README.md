@@ -147,11 +147,51 @@ python faster_whisper_try.py
 ```
 \*\***Write your own shell file that verbally asks for a numerical based input (such as a phone number, zipcode, number of pets, etc) and records the answer the respondent provides.**\*\*
 
+#### Speech-to-ZIP (Whisper)
+
+##### Stack
+
+STT: openai-whisper (Python)
+
+TTS: gTTS (online) → fallback espeak (offline)
+
+Audio I/O: arecord (ALSA), optional aplay for playback
+
+Shell driver: Bash (#!/usr/bin/env bash, set -euo pipefail for robust error handling)
+
+##### Pipeline
+
+Prompt (TTS): uses gTTS to synthesize English prompt (falls back to espeak if gTTS/mpg123 unavailable).
+
+Record: arecord -d 6 -f S16_LE -r 16000 -c 1 zip_input.wav.
+
+Transcribe: whisper.load_model("tiny.en").transcribe(..., language="en").
+
+Extract: re.findall(r"\d", transcript) → join → take first 5 digits.
+
+Confirm (TTS): speaks back the 5-digit ZIP: “Great, your ZIP code is 10044.”
+
+##### Config knobs
+
+Model: WHISPER_MODEL="tiny.en" → for higher accuracy use base.en (slower).
+
+Duration: RECORD_SECONDS=6 → increase to 8–10s for very short responses.
+
+Audio device: set ALSA_DEV="plughw:1,0" after checking arecord -l.
+
+TTS: TTS_ENGINE="gtts" (natural; needs internet) or espeak (offline).
+
+##### Files produced
+
+zip_input.wav – recorded audio (overwritten each run)
+
+zip_transcript.txt – full transcription text
+
+zip_digits.txt – extracted 5-digit ZIP
+
 ### 🤖 NEW: AI-Powered Conversations with Ollama
 
 Want to add intelligent conversation capabilities to your voice projects? **Ollama** lets you run AI models locally on your Raspberry Pi for sophisticated dialogue without requiring internet connectivity!
-
-<img width="1250" height="706" alt="2f612e8b3e5aabd9cfc730727e743a45" src="https://github.com/user-attachments/assets/06c76d93-8091-43d6-96b9-b40fa9cbca35" />
 
 #### Quick Start with Ollama
 
@@ -385,6 +425,7 @@ Answer the following:
 ### How could you use your system to create a dataset of interaction? What other sensing modalities would make sense to capture?
 
 \*\**your answer here*\*\*
+
 
 
 
