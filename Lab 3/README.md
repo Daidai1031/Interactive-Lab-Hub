@@ -215,6 +215,13 @@ source ollama_venv/bin/activate
 # Install Python dependencies in separate environment
 pip install -r ollama_requirements.txt
 ```
+**problem:** 
+` Error: HTTPConnectionPool(host='localhost', port=11434): Read timed out. (read timeout=30) `
+
+
+**solution:** 
+`timeout=600`
+
 #### Ready-to-Use Scripts
 
 We've created three Ollama integration scripts for different use cases:
@@ -425,6 +432,7 @@ Answer the following:
 ### How could you use your system to create a dataset of interaction? What other sensing modalities would make sense to capture?
 
 \*\**your answer here*\*\*
+
 
 
 
