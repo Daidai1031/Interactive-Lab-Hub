@@ -214,6 +214,34 @@ answer = ask_ai("How should I greet users?")
 
 \*\***Try creating a simple voice interaction that combines speech recognition, Ollama processing, and text-to-speech output. Document what you built and how users responded to it.**\*\*
 
+#### #YAZ (pill) voice assistant
+
+**User flows**
+
+- Set time → ask → record → STT → parse → save → TTS confirm.
+
+- Query time → read file → TTS.
+
+- YAZ Q&A → ask → record → STT → Ollama (short) → TTS.
+
+**Pipeline (voice → AI → voice)**
+
+arecord (16 kHz mono) → Whisper (tiny.en) for STT → Ollama (phi3:mini) for short answers → gTTS/espeak for TTS.
+
+**Ollama integration (short, fast answers)**
+
+Use REST /api/generate; constrain output length & randomness.
+
+```
+requests.post(f'{OLLAMA}/api/generate', json={
+    'model':'phi3:mini',
+    'prompt': 'Answer concisely (<= 50 words): '+user_q,
+    'stream': False,
+    'options': {'num_predict':60, 'temperature':0.2, 'repeat_penalty':1.1},
+    'stop':['\n\n']
+}, timeout=REQUEST_TIMEOUT)
+```
+
 ### Serving Pages
 
 In Lab 1, we served a webpage with flask. In this lab, you may find it useful to serve a webpage for the controller on a remote device. Here is a simple example of a webserver.
@@ -306,6 +334,7 @@ Answer the following:
 ### How could you use your system to create a dataset of interaction? What other sensing modalities would make sense to capture?
 
 \*\**your answer here*\*\*
+
 
 
 
