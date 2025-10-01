@@ -147,8 +147,7 @@ python faster_whisper_try.py
 ```
 \*\***Write your own shell file that verbally asks for a numerical based input (such as a phone number, zipcode, number of pets, etc) and records the answer the respondent provides.**\*\*
 
-#### Speech-to-ZIP (Whisper)
-
+[#### Speech-to-ZIP (Whisper)]( https://github.com/Daidai1031/Interactive-Lab-Hub/blob/Fall2025/Lab%203/speech-scripts/ask_zip_whisper.sh)
 ##### Stack
 
 STT: openai-whisper (Python)
@@ -466,6 +465,7 @@ Answer the following:
 ### How could you use your system to create a dataset of interaction? What other sensing modalities would make sense to capture?
 
 \*\**your answer here*\*\*
+
 
 
 
