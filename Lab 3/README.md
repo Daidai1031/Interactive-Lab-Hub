@@ -215,12 +215,7 @@ source ollama_venv/bin/activate
 # Install Python dependencies in separate environment
 pip install -r ollama_requirements.txt
 ```
-**problem:** 
-` Error: HTTPConnectionPool(host='localhost', port=11434): Read timed out. (read timeout=30) `
 
-
-**solution:** 
-`timeout=600`
 
 #### Ready-to-Use Scripts
 
@@ -230,7 +225,45 @@ We've created three Ollama integration scripts for different use cases:
 ```bash
 python3 ollama_demo.py
 ```
+**problem:** 
+` Error: HTTPConnectionPool(host='localhost', port=11434): Read timed out. (read timeout=30) `
 
+
+**My solution 1: Longer timeout** 
+`timeout=600`
+
+**My solution 2: Short & fast reply** 
+```bash
+def query_ollama(prompt, model="phi3:mini", timeout=60):
+    """Short & fast reply from Ollama"""
+    try:
+        t0 = time.perf_counter()
+        response = requests.post(
+            "http://localhost:11434/api/generate",
+            json={
+                "model": model,
+                "prompt": f"Answer concisely in <= 20 words. {prompt}",
+                "stream": False,
+                "options": {
+                    "num_predict": 60,     
+                    "temperature": 0.2,    
+                    "top_p": 0.9,
+                    "top_k": 40,
+                    "repeat_penalty": 1.1  
+                },
+                "stop": ["\n\n"]
+            },
+            timeout=timeout
+        )
+        elapsed = time.perf_counter() - t0
+        print(f"[query_ollama] elapsed: {elapsed:.2f}s (timeout={timeout}s)")
+        if response.status_code == 200:
+            return response.json().get('response', 'No response')
+        else:
+            return f"Error: HTTP {response.status_code} – {response.text[:200]}"
+    except Exception as e:
+        return f"Error: {e}"
+```
 **2. Voice Assistant** - Full speech-to-text + AI + text-to-speech:
 ```bash
 python3 ollama_voice_assistant.py
@@ -432,6 +465,7 @@ Answer the following:
 ### How could you use your system to create a dataset of interaction? What other sensing modalities would make sense to capture?
 
 \*\**your answer here*\*\*
+
 
 
 
