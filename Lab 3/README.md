@@ -230,7 +230,8 @@ python3 ollama_demo.py
 
 
 **My solution 1: Longer timeout** 
-`timeout=600`
+
+`timeout=30`  -> `timeout=600`
 
 **My solution 2: Short & fast reply** 
 ```bash
@@ -465,6 +466,7 @@ Answer the following:
 ### How could you use your system to create a dataset of interaction? What other sensing modalities would make sense to capture?
 
 \*\**your answer here*\*\*
+
 
 
 
