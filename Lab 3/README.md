@@ -232,7 +232,7 @@ python3 ollama_demo.py
 
 `timeout=30`  -> `timeout=600`
 
-**My solution 2: Short & fast reply** 
+**My solution 2: Shorter & faster reply** 
 ```bash
 def query_ollama(prompt, model="phi3:mini", timeout=60):
     """Short & fast reply from Ollama"""
@@ -295,6 +295,32 @@ answer = ask_ai("How should I greet users?")
 **📖 Complete Setup Guide**: See `OLLAMA_SETUP.md` for detailed instructions, troubleshooting, and advanced usage!
 
 \*\***Try creating a simple voice interaction that combines speech recognition, Ollama processing, and text-to-speech output. Document what you built and how users responded to it.**\*\*
+
+**YAZ (pill) voice assistant**
+
+1. Pipeline (voice → AI → voice)
+
+arecord (16 kHz mono) → Whisper (tiny.en) for STT → Ollama (phi3:mini) for short answers → gTTS/espeak for TTS.
+
+**Ollama integration (short, fast answers)**
+
+Use REST /api/generate; constrain output length & randomness.
+```bash
+requests.post(f'{OLLAMA}/api/generate', json={
+    'model':'phi3:mini',
+    'prompt': 'Answer concisely (<= 50 words): '+user_q,
+    'stream': False,
+    'options': {'num_predict':60, 'temperature':0.2, 'repeat_penalty':1.1},
+    'stop':['\n\n']
+}, timeout=REQUEST_TIMEOUT)
+```
+**Minimal UX flows**
+
+1. Set time → ask → record → STT → parse → save → TTS confirm.
+
+2. Query time → read file → TTS.
+
+3. YAZ Q&A → ask → record → STT → Ollama (short) → TTS.
 
 ### Serving Pages
 
@@ -465,6 +491,7 @@ Answer the following:
 ### How could you use your system to create a dataset of interaction? What other sensing modalities would make sense to capture?
 
 \*\**your answer here*\*\*
+
 
 
 
