@@ -15,6 +15,7 @@ import json
 import subprocess
 import sys
 import os
+import time
 
 # Set UTF-8 encoding for output
 if sys.stdout.encoding != 'UTF-8':
@@ -31,24 +32,36 @@ def speak_text(text):
     print(f"Assistant: {clean_text}")
     subprocess.run(['espeak', f'"{clean_text}"'], shell=True, check=False)
 
-def query_ollama(prompt, model="phi3:mini"):
-    """Send a text prompt to Ollama and get response"""
+def query_ollama(prompt, model="phi3:mini", timeout=60):
+    """Short & fast reply from Ollama"""
     try:
+        t0 = time.perf_counter()
         response = requests.post(
             "http://localhost:11434/api/generate",
             json={
                 "model": model,
-                "prompt": prompt,
-                "stream": False
+                # ① 提示词里直接要求简短
+                "prompt": f"Answer concisely in <= 20 words. {prompt}",
+                "stream": False,
+                # ② 控制生成参数（让回答短、稳定、快）
+                "options": {
+                    "num_predict": 60,     # 生成上限（越小越短）
+                    "temperature": 0.2,    # 更确定
+                    "top_p": 0.9,
+                    "top_k": 40,
+                    "repeat_penalty": 1.1  # 减少啰嗦
+                },
+                # （可选）遇到空行停止，进一步缩短
+                "stop": ["\n\n"]
             },
-            timeout=30
+            timeout=timeout
         )
-        
+        elapsed = time.perf_counter() - t0
+        print(f"[query_ollama] elapsed: {elapsed:.2f}s (timeout={timeout}s)")
         if response.status_code == 200:
             return response.json().get('response', 'No response')
         else:
-            return f"Error: {response.status_code}"
-    
+            return f"Error: HTTP {response.status_code} – {response.text[:200]}"
     except Exception as e:
         return f"Error: {e}"
 
