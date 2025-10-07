@@ -456,8 +456,222 @@ The system should:
 * require participants to speak to it. 
 
 *Document how the system works*
+<img width="1018" height="1857" alt="storyboard_;ab3_2" src="https://github.com/user-attachments/assets/b5d8c9d9-1e58-4663-9bf0-2a0070b737b7" />
+
+
+https://github.com/user-attachments/assets/4b7e86a1-e5ef-414a-aebf-6dc980800fac
+
 
 *Include videos or screencaptures of both the system and the controller.*
+## 1) Product Overview
+**Goal:** A voice-driven assistant that helps the user schedule a medication reminder and handles snooze/confirm workflows via two hardware buttons. All prompts and speech are in English.
+
+**User flow:**
+1. User presses the *TOP* tactile button.
+2. Assistant: “Starting a new medication plan. When should I remind you?”  
+   User replies with natural language (e.g., “in three minutes”, “one minute”, “at 8:05 pm”).
+3. Assistant parses and schedules the reminder.
+4. At the scheduled time, Assistant speaks: “It’s time to take your medicine.”
+5. A 30‑second response window begins:
+   - If user presses *TOP* → snooze 30 seconds and repeat step 4.
+   - If user presses *BOTTOM* → confirm taken. Assistant: “Good job. Finished!” and returns to idle.
+
+**Display behavior:**
+- Idle: “Medication Assistant / Press TOP to start”
+- Listening: “Listening… / Say a time”
+- Scheduled: shows **Next Reminder**, **target time**, and a live **T‑MM:SS** countdown plus current time.
+- Ringing: “Time to take / medicine”
+- Snoozed: “Snoozed / 30 s”
+- Finished: “Taken / OK”
+
+---
+
+## 2) Architecture & Components
+### State machine
+- **IDLE** → (TOP) → **AWAIT_TIME** (listen/parse) → **SCHEDULED** (timer threads)
+- **SCHEDULED** → (time reached) → **RINGING** (30 s response window)
+- **RINGING** → (TOP) → **SNOOZE** (30 s) → back to **RINGING**
+- **RINGING** → (BOTTOM) → **IDLE** (Finished)
+
+### Modules
+- **Buttons**: `gpiozero.Button` on BCM23 (TOP) and BCM24 (BOTTOM); debounced. Fallbacks: `evdev` (GPIO keys) or keyboard.
+- **ASR**: Vosk + sounddevice @ 16 kHz. The callback passes **bytes** to `AcceptWaveform`. Optional mic selection via `SD_INPUT_NAME`.
+- **Time parsing**: Heuristics for:
+  - relative: “in 3 minutes”, “one minute”, “30 seconds” (even without “in/after”), “2h 15m”
+  - absolute: “at 8:05 pm” (rolls over to tomorrow if past)
+  - fallback to `dateparser` with timezone‑safe settings
+- **TTS**: `espeak-ng` (or `pyttsx3` fallback). Includes a **Bluetooth audio warm‑up** to prevent first‑word truncation.
+- **Display**: ST7789 (SPI). Pillow for rendering (Pillow 10+ safe via `textbbox`). Dedicated countdown painter updates once per second.
+- **Scheduler**: lightweight threads: a waiter for time reach, a countdown refresher, snooze timers.
+
+---
+
+## 3) Hardware Interface & Pin Map
+- **Buttons**:
+  - TOP: **BCM23** (pull‑up, active‑low)
+  - BOTTOM: **BCM24** (pull‑up, active‑low)
+- **Backlight**: **BCM22** (output, on)
+- **Mini PiTFT (ST7789)** over SPI:  
+  `cs=D5`, `dc=D25`, `rst=None`, `baudrate=64 MHz`, `width=135`, `height=240`, `x_offset=53`, `y_offset=40`, rotation=90°.  
+  > Using `rst=None` avoids conflicts with BCM24 (BOTTOM button).
+
+---
+
+## 4) Software Setup
+### APT packages (recommended)
+```bash
+sudo apt-get update
+sudo apt-get install -y espeak-ng portaudio19-dev python3-pip python3-venv \
+  libatlas-base-dev libopenblas-dev
+```
+
+### Python venv and dependencies
+```bash
+cd "/home/pi/Interactive-Lab-Hub/Lab 3"
+python3 -m venv .venv
+source .venv/bin/activate
+pip install --upgrade pip wheel
+pip install gpiozero lgpio sounddevice vosk pillow dateparser \
+    adafruit-circuitpython-rgb-display pyttsx3
+```
+
+### Services that can block GPIO
+If your course image starts a screen service on boot:
+```bash
+sudo systemctl stop piscreen.service --now   # stop during development
+# ... later when done
+sudo systemctl start piscreen.service --now
+```
+
+---
+
+## 5) Running & Useful Environment Variables
+**Minimal button test**
+```bash
+python "/home/pi/Interactive-Lab-Hub/Lab 3/speech-scripts/button_test.py"
+```
+
+**Final app (no display, easier to debug)**
+```bash
+cd "/home/pi/Interactive-Lab-Hub/Lab 3/speech-scripts"
+source ../.venv/bin/activate
+USE_DISPLAY=0 BUTTON_BACKEND=gpio GPIOZERO_PIN_FACTORY=lgpio \
+python med_assistant_v3_final.py
+```
+
+**Final app with display**
+```bash
+sudo systemctl stop piscreen.service --now
+BUTTON_BACKEND=gpio USE_DISPLAY=1 GPIOZERO_PIN_FACTORY=lgpio \
+python med_assistant_v3_final.py
+```
+
+**Select a specific microphone (e.g., Logitech)**
+```bash
+SD_INPUT_NAME=Logi BUTTON_BACKEND=gpio USE_DISPLAY=1 GPIOZERO_PIN_FACTORY=lgpio \
+python med_assistant_v3_final.py
+```
+
+**Environment variables (summary)**
+- `USE_DISPLAY={0|1}`: enable screen drawing
+- `BUTTON_BACKEND={gpio|evdev|keyboard}`: force button driver
+- `GPIOZERO_PIN_FACTORY=lgpio`: preferred on Pi 5
+- `TOP_BUTTON_PIN`, `BOTTOM_BUTTON_PIN`: override BCM pins (defaults 23/24)
+- `SD_INPUT_NAME`: substring to select input audio device
+- `TZ`: timezone (default `America/New_York`)
+
+---
+
+## 6) Issues Encountered & Fixes
+1. **GPIO busy** during display init or button read  
+   **Cause:** a boot service (`piscreen.service`) occupying pins.  
+   **Fix:** stop the service while running the app; ensure TFT reset is **not** mapped to BCM24.
+
+2. **Physical buttons didn’t trigger in the main app**  
+   **Cause:** pin factory / contention differences between scripts.  
+   **Fix:** verified with `button_test.py`; for the app, forced `BUTTON_BACKEND=gpio` and `GPIOZERO_PIN_FACTORY=lgpio`.
+
+3. **UnicodeEncodeError** in logs (em‑dash/UTF‑8)  
+   **Fix:** ASCII‑only logs for terminal safety; removed special punctuation.
+
+4. **Pillow 10+ removed `ImageDraw.textsize`**  
+   **Symptom:** `AttributeError: 'ImageDraw' object has no attribute 'textsize'`.  
+   **Fix:** used `textbbox()` when available, fallback to legacy `textsize()`.
+
+5. **Vosk cffi TypeError** in sound callback  
+   **Symptom:** `initializer for ctype 'char *' must be a cdata pointer...`.  
+   **Fix:** pass `bytes(indata)` to `AcceptWaveform`.
+
+6. **`dateparser` TypeError (timezone)**  
+   **Symptom:** `Invalid {"TIMEZONE": None}`.  
+   **Fix:** only pass `TIMEZONE` if non‑empty; otherwise omit; also add robust relative parsing.
+
+7. **Utterances like “one minute” (no “in/after”) not parsed**  
+   **Fix:** added detection for bare relative phrases (words or numeric + units) → seconds.
+
+8. **Bluetooth speaker cuts off first words**  
+   **Fix:** added TTS **warm‑up**: `espeak-ng -a 0` (silent) + ~120 ms pause before speaking real text.
+
+9. **Display didn’t update (fixed time)**  
+   **Fix:** added a dedicated countdown thread (paint at second boundaries) and a rich scheduled screen.
+
+10. **TOP/BOTTOM behavior clarity**  
+    **Note:** in **IDLE**, only TOP starts; in **RINGING**, TOP=**Snooze 30s**, BOTTOM=**Finished**.
+
+---
+
+## 7) Code Map (key files)
+- `med_assistant_v3_final.py` – main application with all fixes (ASR/TTS/Display/Buttons/State machine)
+- `button_test.py` – minimal hardware button verifier (prints & speaks on press)
+- (previous diagnostic builds retained for reference):
+  - `med_assistant_v3_diag.py` – button callback logging
+  - `med_assistant_v3_diag_fix.py` – ASR bytes fix
+  - `med_assistant_v3_diag_tzfix.py` – timezone‑safe parsing + bare relative time
+
+---
+
+## 8) Testing Checklist
+- **Buttons:** `button_test.py` prints on both TOP/BOTTOM; no “GPIO busy”.
+- **ASR:** say “in 10 seconds” → logs show `[ASR] Heard: in 10 seconds`.
+- **Scheduling:** screen shows Next Reminder, target time, and T‑MM:SS counting down.
+- **Ringing:** at time, complete TTS sentence is audible; 30 s response window starts.
+- **Snooze:** TOP during ringing → “Snoozed / 30 s”, then rings again.
+- **Finish:** BOTTOM during ringing → “Taken / OK” then back to idle.
+
+---
+
+## 9) Design Choices & Rationale
+- **Simple, robust threading** instead of external schedulers; avoids cron/systemd complexity.
+- **Vosk offline ASR** for low-latency local recognition without network dependency.
+- **espeak-ng** for consistent TTS on Pi; Bluetooth warm‑up eliminates first‑word truncation.
+- **GPIO mapping avoiding conflicts** (no TFT reset on BCM24) ensures reliable button events.
+- **Pillow 10+ compatibility** future‑proofs display code on current Python images.
+
+---
+
+## 10) Future Enhancements (optional)
+- Per‑reminder labels (“vitamin D”, “antibiotic”) and multi‑reminder queue.
+- Persistent schedules (write to disk), recurring reminders (e.g., every 8 hours).
+- On‑device volume control via BOTTOM long‑press.
+- Wake word to start flow (hands‑free), VAD for smarter listening window.
+- On‑screen icons, progress rings, or color themes.
+
+---
+
+## 11) Safety & Privacy Notes
+- No cloud ASR used; all speech processed locally.
+- Avoid logging raw audio; keep console output ASCII‑only.
+- If adding persistence, store only minimal timestamps/labels.
+
+---
+
+## 12) Quick Troubleshooting
+- **No reaction to buttons** → stop services (`piscreen.service`), verify pins with `button_test.py`, set `GPIOZERO_PIN_FACTORY=lgpio`.
+- **TTS clipped** → ensure Bluetooth warm‑up path is executed (espeak‑ng installed).
+- **ASR silent** → choose mic with `SD_INPUT_NAME`, check `arecord -l`.
+- **Display errors** → confirm SPI enabled; verify cs/dc pins (`D5`/`D25`), `rst=None`, backlight on `BCM22`.
+
+---
 
 <details>
   <summary><strong>Submission Cleanup Reminder (Click to Expand)</strong></summary>
@@ -491,6 +705,7 @@ Answer the following:
 ### How could you use your system to create a dataset of interaction? What other sensing modalities would make sense to capture?
 
 \*\**your answer here*\*\*
+
 
 
 
