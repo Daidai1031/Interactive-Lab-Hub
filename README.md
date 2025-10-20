@@ -11,7 +11,7 @@ Please place links here to the README.md's for each of your labs here:
 
 [Lab 3. Chatterboxes](Lab%203/)
 
-Lab 4. Ph-UI!!!
+[Lab 4. Ph-UI!!!](https://github.com/Daidai1031/Interactive-Lab-Hub/tree/Fall2025/Lab%204)
 
 Lab 5. Observant Systems
 
