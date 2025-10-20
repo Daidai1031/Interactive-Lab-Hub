@@ -259,7 +259,69 @@ Usually, sensors need to be positioned in specific locations or orientations to 
 
 **\*\*\*Pick one of these designs to prototype.\*\*\***
 
+**1. Automatic Lamp**
 
+A desk lamp that will automatically turn on the light if your hand is placed below the light (for a certain distance), for example, while writing or typing. Pull your hand away, and it dims. The sensor is mounted on the underside front edge of the lamp head, pointing down and slightly forward. This position allows it to detect hands on the desk surface below while keeping the lamp's light unobstructed.
+
+<img src="https://github.com/user-attachments/assets/862fd07f-8bb8-491e-95c4-d700211fc40b" width="600">
+
+
+**2. Monster Box**
+
+This design features a classic treasure-chest-style box. A cute, fluffy creature is attached to the lid from the inside. When no hand is near (distance > 5cm), the lid is open, and the creature peeks out. The distance sensor is flush-mounted on the front face of the box. When a hand approaches (distance < 5cm), the servo pulls the lid shut, making the creature "hide."
+
+
+<img src="https://github.com/user-attachments/assets/1f816097-3146-4aba-8a15-ff357d96ddb8" width="600"/>
+
+**3. The Interactive Picture Frame**
+
+A special frame for art. The distance sensor is mounted below the picture or near a specific character/object on the page, pointing outwards. When someone points their finger at that picture (getting close to the sensor's detection range) for a certain amount of time, it triggers an associated audio clip (e.g., a character's voice, a sound effect, or an introduction)
+
+<img src="https://github.com/user-attachments/assets/21fced76-f58c-4b39-94fd-f25c1f9373cb" width="600"/>
+
+**4. The Personal Space Detector**
+
+A small, subtle device that sits on your desk or on the edge of a personal workspace. The distance sensor is aimed outwards, creating an invisible "personal bubble" zone. If someone (or something) breaches that zone (e.g., comes too close while you're focused), it could trigger a gentle, non-alarming notification: a soft chime, a subtle LED color change, or a vibration.
+
+<img src="https://github.com/user-attachments/assets/3d990cb3-6e1a-4069-9916-331720d9a0c0" width="600"/>
+
+**5. Mirror, Mirror on the Wall**
+
+A human-sized dressing mirror that uses a distance sensor to react to your presence. As a person approaches, a discreetly placed distance sensor detects their presence. This triggers a soft, diffused LED light strip hidden behind the mirror's border, causing the frame to glow and illuminate the user. When no one is near, the lights remain off, saving energy and maintaining a minimalist appearance.
+
+<img src="https://github.com/user-attachments/assets/668b7a2b-8cdd-43fe-a7f5-776907852b80" width="600"/>
+
+
+**\*\*\*What are some things these sketches raise as questions? What do you need to physically prototype to understand how to anwer those questions?\*\*\***
+
+**1. Automatic Lamp:** Should the sensor be on the base, pointing up, or in the lampshade, pointing down? How does that choice change the user's interaction?
+
+**2. Monster Box:** How can we design the box to hide the sensor and servo mechanism while still inviting someone to interact with it? How to open the lid while popping up the monster?
+
+**3. The Interactive Picture Frame:** How can the picture frame or book page be designed to hide the sensor and wiring, yet still guide the user to the "interactive" spots where they should point their finger?
+
+**4. The Personal Space Detector:** How can the device be designed to blend into a workspace, making the sensor almost invisible, while still effectively defining and detecting breaches of a "personal space" boundary? How does the device's orientation influence the shape of the detection zone?
+
+**5. Mirror, Mirror on the Wall:** Where is the optimal position for the distance sensor? If placed at the bottom, will it reliably detect people of different heights? If at the top, will it be too far away?
+
+**\*\*\*Pick one of these designs to prototype.\*\*\***
+
+## The Shy Creature Box
+
+<img src="https://github.com/user-attachments/assets/c1fc7ca5-0244-4df6-b596-d0941596a756" width="600"/>
+
+**Physical Form ("Looks Like"):**
+The device is housed in a rectangular cardboard box, creating a small stage-like environment. The front panel features clean cutouts for the input components, giving it the feel of an interactive display. The main character is a small, whimsical figurine with a pink bow, positioned to peek over the front edge of the box.
+
+**Components & Interaction ("Works Like"):**
+
+Primary Input: A distance sensor is prominently mounted on the front-right of the box. Its purpose is to detect when a user's hand or an object comes within a close range.
+
+Mechanism: A servo motor, visible inside the box, is connected to the duck figurine. This motor acts as the "muscle" that makes the creature move.
+
+Core Interaction: The intended behavior is that when the creature is peeking out, and the distance sensor detects an approaching hand, the servo motor will activate. It will quickly pull the figurine down behind the front wall, making the creature appear "shy" and hide from the user.
+
+Secondary Input: A joystick is mounted on the front-left, suggesting the potential for additional modes of interaction, such as manually controlling the creature or navigating a menu on a display (not yet implemented).
 ### Part D
 ### Physical considerations for displaying information and housing parts
 
