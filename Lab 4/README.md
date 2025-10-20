@@ -557,4 +557,66 @@ Document all the prototypes and iterations you have designed and worked on! Agai
 * "Looks like": shows how the device should look, feel, sit, weigh, etc.
 * "Works like": shows what the device can do
 * "Acts like": shows how a person would interact with the device
+---
 
+## 🎯 Concept Overview
+**The Shy Creature Box 2.0** brings a playful personality to life through sensors and expressive outputs.  
+It reacts to the user’s proximity by changing its **facial expression**, **body motion**, and **voice**, creating a lifelike interaction loop.
+
+When a user reaches toward the box, the “creature” senses the approach — the OLED shows a *shocked* or *scared* face 😳, the servo quickly pulls the creature down to “hide,” and the speaker plays a squeaky sound.  
+When no one is near, the creature slowly reappears, smiling again. 😊
+
+---
+
+## 🧩 Hardware Components
+| Category | Device | Function |
+|-----------|---------|-----------|
+| **Input 1** | HC-SR04 Ultrasonic Distance Sensor | Detects approaching hand distance |
+| **Input 2** | Analog Joystick | Allows user to manually change creature “mood” (happy / curious / angry) |
+| **Output 1** | SparkFun Qwiic OLED Display (0.91") | Displays animated creature faces and emotional states |
+| **Output 2** | SG90 Servo Motor | Controls figurine or lid movement (hide / peek motion) |
+| **Output 3** | Mini Speaker (PWM audio out) | Plays short “emotion” sounds when state changes |
+
+---
+
+## ⚙️ Interaction Logic
+
+| State | Trigger | OLED Expression | Servo Motion | Speaker Sound |
+|--------|----------|----------------|---------------|----------------|
+| **Idle / Happy** | No hand detected | 😊 happy face | Peeking upright | Soft idle hum |
+| **Shy Reaction** | Hand < 10 cm | 😳 surprised face | Quickly hides | Squeaky “eep!” sound |
+| **Curious Mode** | Joystick up | 🤔 curious face | Slightly tilt up | “Hmm…” tone |
+| **Angry Mode** | Joystick down | 😠 angry face | Fast twitch | Low “grr” buzz |
+
+---
+
+## 🧠 Interaction Diagram
+            +------------------------------+
+            |     THE SHY CREATURE BOX     |
+            |------------------------------|
+            |  [Ultrasonic Sensor] ───► Distance data
+            |  [Joystick] ────────────► Mood control
+            |                              │
+            |                              ▼
+            |                    +------------------+
+            |                    |  Microcontroller  |
+            |                    | (Arduino / Pi Pico)|
+            |                    +------------------+
+            |                              │
+            |      ┌──────────────┬────────┼─────────┐
+            |      ▼              ▼        ▼         ▼
+            | [OLED Display] [Servo Motor] [Speaker] |
+            |   (Emotion)     (Motion)     (Sound)   |
+            +----------------------------------------+
+
+### Interaction Flow
+1. **Hand approaches** → distance sensor detects proximity (<10cm).  
+2. **Microcontroller logic** → triggers “shy” reaction:
+   - OLED shows 😳 shocked face  
+   - Servo hides duck  
+   - Speaker plays squeak sound  
+3. **When user leaves**, after a delay, the creature calms down:
+   - OLED returns to 😊 face  
+   - Servo raises duck slowly  
+   - Speaker plays soft hum  
+4. **Joystick mode switch** → changes emotional theme (happy / angry / curious).
