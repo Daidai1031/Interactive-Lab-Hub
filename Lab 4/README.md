@@ -571,7 +571,7 @@ When no one is near, the creature slowly reappears, smiling again. 😊
 ## 🧩 Hardware Components
 | Category | Device | Function |
 |-----------|---------|-----------|
-| **Input 1** | HC-SR04 Ultrasonic Distance Sensor | Detects approaching hand distance |
+| **Input 1** | Sparkfun Proximity Sensor Breakout Distance Sensor | Detects approaching hand distance |
 | **Input 2** | Analog Joystick | Allows user to manually change creature “mood” (happy / curious / angry) |
 | **Output 1** | SparkFun Qwiic OLED Display (0.91") | Displays animated creature faces and emotional states |
 | **Output 2** | SG90 Servo Motor | Controls figurine or lid movement (hide / peek motion) |
@@ -608,6 +608,7 @@ When no one is near, the creature slowly reappears, smiling again. 😊
             | [OLED Display] [Servo Motor] [Speaker] |
             |   (Emotion)     (Motion)     (Sound)   |
             +----------------------------------------+
+<img width="384" height="256" alt="image" src="https://github.com/user-attachments/assets/b8ed41d3-c535-4951-acdf-2029f32af492" />
 
 ### Interaction Flow
 1. **Hand approaches** → distance sensor detects proximity (<10cm).  
