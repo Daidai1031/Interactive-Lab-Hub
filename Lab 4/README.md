@@ -591,24 +591,8 @@ When no one is near, the creature slowly reappears, smiling again. 😊
 ---
 
 ## 🧠 Interaction Diagram
-            +------------------------------+
-            |     THE SHY CREATURE BOX     |
-            |------------------------------|
-            |  [Ultrasonic Sensor] ───► Distance data
-            |  [Joystick] ────────────► Mood control
-            |                              │
-            |                              ▼
-            |                    +------------------+
-            |                    |  Microcontroller  |
-            |                    | (Arduino / Pi Pico)|
-            |                    +------------------+
-            |                              │
-            |      ┌──────────────┬────────┼─────────┐
-            |      ▼              ▼        ▼         ▼
-            | [OLED Display] [Servo Motor] [Speaker] |
-            |   (Emotion)     (Motion)     (Sound)   |
-            +----------------------------------------+
-<img width="384" height="256" alt="image" src="https://github.com/user-attachments/assets/b8ed41d3-c535-4951-acdf-2029f32af492" />
+![ILST-28 0 0-zh_CN-5a62fef2-6533-47f3-ba99-026ea3242d59  已恢复](https://github.com/user-attachments/assets/3a340e26-a706-45d7-aed3-971e1c4f5f29)
+
 
 ### Interaction Flow
 1. **Hand approaches** → distance sensor detects proximity (<10cm).  
