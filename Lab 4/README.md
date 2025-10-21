@@ -255,37 +255,35 @@ Usually, sensors need to be positioned in specific locations or orientations to 
 
 **\*\*\*Draw 5 sketches of different ways you might use your sensor, and how the larger device needs to be shaped in order to make the sensor useful.\*\*\***
 
-**\*\*\*What are some things these sketches raise as questions? What do you need to physically prototype to understand how to anwer those questions?\*\*\***
+### We chose the distance sensor
 
-**\*\*\*Pick one of these designs to prototype.\*\*\***
-
-**1. Automatic Lamp**
+**1. Automatic Lamp** 
 
 A desk lamp that will automatically turn on the light if your hand is placed below the light (for a certain distance), for example, while writing or typing. Pull your hand away, and it dims. The sensor is mounted on the underside front edge of the lamp head, pointing down and slightly forward. This position allows it to detect hands on the desk surface below while keeping the lamp's light unobstructed.
 
 <img src="https://github.com/user-attachments/assets/862fd07f-8bb8-491e-95c4-d700211fc40b" width="600">
 
 
-**2. Monster Box**
+**2. Monster Box** 
 
 This design features a classic treasure-chest-style box. A cute, fluffy creature is attached to the lid from the inside. When no hand is near (distance > 5cm), the lid is open, and the creature peeks out. The distance sensor is flush-mounted on the front face of the box. When a hand approaches (distance < 5cm), the servo pulls the lid shut, making the creature "hide."
 
 
 <img src="https://github.com/user-attachments/assets/1f816097-3146-4aba-8a15-ff357d96ddb8" width="600"/>
 
-**3. The Interactive Picture Frame**
+**3. The Interactive Picture Frame** 
 
 A special frame for art. The distance sensor is mounted below the picture or near a specific character/object on the page, pointing outwards. When someone points their finger at that picture (getting close to the sensor's detection range) for a certain amount of time, it triggers an associated audio clip (e.g., a character's voice, a sound effect, or an introduction)
 
 <img src="https://github.com/user-attachments/assets/21fced76-f58c-4b39-94fd-f25c1f9373cb" width="600"/>
 
-**4. The Personal Space Detector**
+**4. The Personal Space Detector** 
 
 A small, subtle device that sits on your desk or on the edge of a personal workspace. The distance sensor is aimed outwards, creating an invisible "personal bubble" zone. If someone (or something) breaches that zone (e.g., comes too close while you're focused), it could trigger a gentle, non-alarming notification: a soft chime, a subtle LED color change, or a vibration.
 
 <img src="https://github.com/user-attachments/assets/3d990cb3-6e1a-4069-9916-331720d9a0c0" width="600"/>
 
-**5. Mirror, Mirror on the Wall**
+**5. Mirror, Mirror on the Wall** 
 
 A human-sized dressing mirror that uses a distance sensor to react to your presence. As a person approaches, a discreetly placed distance sensor detects their presence. This triggers a soft, diffused LED light strip hidden behind the mirror's border, causing the frame to glow and illuminate the user. When no one is near, the lights remain off, saving energy and maintaining a minimalist appearance.
 
@@ -322,6 +320,8 @@ Mechanism: A servo motor, visible inside the box, is connected to the duck figur
 Core Interaction: The intended behavior is that when the creature is peeking out, and the distance sensor detects an approaching hand, the servo motor will activate. It will quickly pull the figurine down behind the front wall, making the creature appear "shy" and hide from the user.
 
 Secondary Input: A joystick is mounted on the front-left, suggesting the potential for additional modes of interaction, such as manually controlling the creature or navigating a menu on a display (not yet implemented).
+
+
 ### Part D
 ### Physical considerations for displaying information and housing parts
 
@@ -365,17 +365,126 @@ Think about how you want to present the information about what your sensor is se
  
 **\*\*\*Sketch 5 designs for how you would physically position your display and any buttons or knobs needed to interact with it.\*\*\***
 
+**1.Classic Treasure Chest**
+
+**Looks Like:**
+
+A rectangular treasure chest shape with a small decorative latch on the front. The distance sensor is hidden under the latch area. When the lid is open, the creature peeks out; when the lid closes, it completely hides inside.
+
+**Works Like:**
+
+- The distance sensor detects when a hand comes near.
+- When a hand approaches → the servo motor closes the lid.
+- When the hand moves away → the lid slowly opens, and the creature peeks out again.
+
+<img src="https://github.com/user-attachments/assets/707354e8-a950-4ff0-ab1a-2db33e87f9b8"  width="400"/>
+
+
+**2. Stage Box**
+
+**Looks Like:**
+
+An open-front “mini stage” box where the creature sits in the center. A paper curtain is attached to the top and can move up and down to hide or reveal the creature.
+
+**Works Like:**
+
+- The distance sensor is mounted on the right side of the stage frame.
+- When someone approaches → the servo pulls the curtain down, hiding the creature.
+- When the person moves away → the curtain rises, revealing the creature again.
+
+<img src="https://github.com/user-attachments/assets/e40bef64-18be-4032-9582-f2bef71f2e10"  width="400"/>
+
+
+**3. Peek-A-Boo Dome**
+
+**Looks Like:**
+
+A half-sphere or dome-shaped cover made of paper or transparent plastic, with the creature inside. The base holds the distance sensor and servo motor.
+
+**Works Like:**
+
+- The distance sensor is located on the front of the base.
+- When the hand approaches → the servo pulls the creature down into the dome.
+- When the hand moves away → the creature rises again to peek out.
+
+<img src="https://github.com/user-attachments/assets/d3bc4a39-86e2-4d8d-8eb1-4de55f6671ed" width="400"/>
+
+
+**4. Drawer Creature**
+
+**Looks Like:**
+
+A drawer-like box, with the creature hiding inside the sliding drawer. The distance sensor and a manual knob are mounted on the front face.
+
+**Works Like:**
+
+- The distance sensor detects proximity.
+- When someone comes close → the servo retracts the drawer.
+- When the person moves away → the drawer slides out again, letting the creature peek out.
+- The knob can adjust movement speed or “mood mode” (slow = shy, fast = startled).
+
+<img src="https://github.com/user-attachments/assets/2efe7b21-1d55-4ceb-bf02-61d44e3eec56" width="400"/>
+
+
+
+**5. Curious Window Creature**
+
+**Looks Like:**
+
+A small “window box” or “house façade” made of cardboard, with a window cutout on the front. Behind the window sits the creature. Curtains or small shutters can open and close using the servo motor. The distance sensor is placed above or below the window frame.
+
+**Works Like:**
+
+- When no one is nearby → the window shutters are open, and the creature is visible, calmly looking out.
+- When someone approaches → the distance sensor triggers the servo to close the shutters, making the creature “hide.”
+- When the person moves away → the shutters reopen, and the creature peeks out again.
+- A knob could control “mood mode” — adjusting how fast the shutters open (slow = shy, fast = startled).
+
+<img src="https://github.com/user-attachments/assets/057ce4db-055b-4ce8-a9f5-87b459285859" width="400"/>
+
 **\*\*\*What are some things these sketches raise as questions? What do you need to physically prototype to understand how to anwer those questions?\*\*\***
+
+**1. Classic Treasure Chest:** Should the creature be attached to the lid or fixed inside for better stability?
+**2. Stage Box:** How close to the front edge should the creature be placed to look natural?
+**3. Peek-A-Boo Dome:** Should the distance sensor be tilted upward for better detection?
+**4. Drawer Creature:** Should the sensor be mounted on the drawer front or the outer frame?
+**5. Curious Window Creature:** How much space inside the box is needed for the servo linkage to move smoothly?
+
 
 **\*\*\*Pick one of these display designs to integrate into your prototype.\*\*\***
 
+We chose to prototype the "Classic Monster Box" design. This design is inspired by the "Curious Window Creature" concept but uses a simpler, more direct open-box form factor that is ideal for initial prototyping. It allows us to focus on the core interaction of a creature hiding in response to a sensor.
+
+
 **\*\*\*Explain the rationale for the design.\*\*\*** (e.g. Does it need to be a certain size or form or need to be able to be seen from a certain distance?)
 
-Build a cardboard prototype of your design.
+
+The rationale for choosing the simple cardboard box design was driven by the goals of rapid and effective prototyping:
+
+**Feasibility and Speed:** A rectangular box is significantly faster and easier to construct from cardboard than a more complex house-shaped façade. This allowed us to quickly create a sturdy housing and move on to testing the electronics and the core interaction.
+
+**Size and Scale:** The prototype is sized to be a compact desktop object. Its dimensions are primarily dictated by the need to comfortably house the internal components (Raspberry Pi, servo, wiring) while remaining small enough to not be obtrusive. This smaller scale is also a direct response to the distance sensor's effective range of about 20cm; the form factor encourages the user to bring their hand close, ensuring they are well within the sensor's detection zone for a reliable interaction.
+
+**Viewing Distance:** This device is designed for close, intimate interaction, meant to be viewed from no more than a few feet away. The creature's hiding motion is a small, subtle action that would be lost from across a room. Furthermore, the use of the small OLED screen to display status messages like "Hiding!" requires the user to be close enough to read the text, reinforcing its function as a personal, one-on-one interactive experience rather than a public display.
 
 
 **\*\*\*Document your rough prototype.\*\*\***
 
+<img src="https://github.com/user-attachments/assets/96e55e56-79f5-45e0-8e9f-576cec14a891" width="400"/>
+
+**Materials:** The prototype is constructed from a single piece of folded corrugated cardboard, forming a rectangular, open-top box. The material is lightweight yet rigid enough to support the components. The cutouts for the sensor, display, and joystick are done by hand, which is appropriate for a rapid, low-fidelity prototype.
+
+**Components and Layout:** The front panel is the primary user interface and is laid out with three distinct components:
+
+**Distance Input:** A small distance sensor is mounted on the right side. This is the main input for the hiding interaction, detecting when a user's hand approaches.
+
+**Input (Left):** A joystick is mounted on the left side, providing a potential secondary input for future features like manual control or mode selection.
+
+**Output (Center):** A small OLED screen is centrally located. This display is intended to provide real-time feedback about the creature's state, such as displaying the distance value from the sensor or showing text like "Hiding!" or "All Clear!".
+
+**Mechanism (Internal):** A servo motor is mounted inside the box and connected to the duck figurine. When triggered, it pulls the creature down, making it disappear from view behind the front wall. The Raspberry Pi and all associated wiring are housed openly inside for easy access.
+
+**Interaction Flow:** The intended interaction is that the creature starts in a visible, "peeking" state. As a user brings their hand toward the distance sensor, the OLED screen will update with the creature's status, and the servo motor will activate, pulling the creature down into the box in a "shy" hiding motion. When the hand is removed, the creature will return to its original position.
 
 # LAB PART 2
 
@@ -557,8 +666,7 @@ Document all the prototypes and iterations you have designed and worked on! Agai
 * "Looks like": shows how the device should look, feel, sit, weigh, etc.
 * "Works like": shows what the device can do
 * "Acts like": shows how a person would interact with the device
----
-
+ 
 ## 🎯 Concept Overview
 **The Shy Creature Box 2.0** brings a playful personality to life through sensors and expressive outputs.  
 It reacts to the user’s proximity by changing its **facial expression**, **body motion**, and **voice**, creating a lifelike interaction loop.
@@ -590,8 +698,11 @@ When no one is near, the creature slowly reappears, smiling again. 😊
 
 ---
 
+
 ## 🧠 Interaction Diagram
-![ILST-28 0 0-zh_CN-5a62fef2-6533-47f3-ba99-026ea3242d59  已恢复](https://github.com/user-attachments/assets/3a340e26-a706-45d7-aed3-971e1c4f5f29)
+
+
+<img src="https://github.com/user-attachments/assets/70ef4c71-3fbe-40b3-bf73-9346113ca33f" width="400"/>
 
 
 ### Interaction Flow
