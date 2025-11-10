@@ -1,15 +1,6 @@
 # Distributed Interaction
 
-**NAMES OF COLLABORATORS HERE**
-
-For submission, replace this section with your documentation!
-
----
-
-## Prep
-
-1. Pull the new changes
-2. Read: [The Presence Table](https://dl.acm.org/doi/10.1145/1935701.1935800) ([video](https://vimeo.com/15932020))
+**Team Members:** Jessica Hsiao (dh779), Irene Wu (yw2785), Melody Huang (yh2353), Dingran Dai (dd699)
 
 ## Overview
 
@@ -20,8 +11,6 @@ Build interactive systems where **multiple devices communicate over a network** 
 - B: Try collaborative pixel grid demo  
 - C: Build your own distributed system
 
----
-
 ## Part A: MQTT Messaging
 
 MQTT = lightweight messaging for IoT. Publish/subscribe model with central broker.
@@ -31,35 +20,13 @@ MQTT = lightweight messaging for IoT. Publish/subscribe model with central broke
 - **Topic**: Like `IDD/bedroom/temperature` (use `#` wildcard)
 - **Publish/Subscribe**: Send and receive messages
 
-**Install MQTT tools on your Pi:**
-```bash
-sudo apt-get update
-sudo apt-get install -y mosquitto-clients
-```
-
-**Test it:**
-
-**Subscribe to messages (listener):**
-```bash
-mosquitto_sub -h farlab.infosci.cornell.edu -p 1883 -t 'IDD/#' -u idd -P 'device@theFarm'
-```
-
-**Publish a message (sender):**
-```bash
-mosquitto_pub -h farlab.infosci.cornell.edu -p 1883 -t 'IDD/test/yourname' -m 'Hello!' -u idd -P 'device@theFarm'
-```
-
-> **💡 Tips:**
-> - Replace `yourname` with your actual name in the topic
-> - Use single quotes around the password: `'device@theFarm'`
-
-**🔧 Debug Tool:** View all MQTT messages in real-time at `http://farlab.infosci.cornell.edu:5001`
-
-![MQTT Explorer showing messages](imgs/MQTT-explorer.png)
-
 **💡 Brainstorm 5 ideas for messaging between devices**
+- Storyteller game: Start randomly from a person’s pi, using a word chain structure. Participants collaboratively weave a narrative by linking words, where each subsequent word must begin with the last letter of the previous one. 
+- An online forum, such as Poll Everywhere, where everyone can participate in a real-time discussion. A central moderator publishes the questions or topics, and all - the other users can express their opinion through pi.
+- School announcements: whenever the school sends out an announcement, it’s delivered directly to each student’s device. Students can also use the device to share useful information with each other.
+- Personal Data Sharing: sync all personal device data, such as notes, health data, and plans, across all personal devices without being limited to a single brand.
+When 2+ Pis come within Wi-Fi range, they automatically open a chat window which could exchange personal symbols (emojis, sound or text that represents its user’s mood of the day). 
 
----
 
 ## Part B: Collaborative Pixel Grid
 
@@ -67,61 +34,8 @@ Each Pi = one pixel, controlled by RGB sensor, displayed in real-time grid.
 
 **Architecture:** `Pi (sensor) → MQTT → Server → Web Browser`
 
-**Setup:**
-
-1. **Sensor**
-
-#### Light/Proximity/Gesture sensor (APDS-9960)
-We use this sensor [Adafruit APDS-9960](https://www.adafruit.com/product/3595) for this exmaple to detect light (also RGB)
- 
-<img src="https://cdn-shop.adafruit.com/970x728/3595-06.jpg" width=200>
-
-Connect it to your pi with Qwiic connector
-
-
-<img src="imgs/IMG_0270.jpg" height="200" />
-We need to use the screen to display the color detection, so we need to stop the running piscreen.service to make your screen available again
-
-```bash
-# stop the screen service
-sudo systemctl stop piscreen.service
-```
-
-if you want to restart the screen service
-```bash
-# start the screen service
-sudo systemctl start piscreen.service
-```
- 
-2. **Server** (one person on laptop):
-```bash
-cd "Lab 6"  
-source .venv/bin/activate
-pip install -r requirements-server.txt
-python app.py
-```
-
-2. **View in browser:**
-   - Grid: `http://farlab.infosci.cornell.edu:5000`
-   - Controller: `http://farlab.infosci.cornell.edu:5000/controller`
-
-3. **Pi publisher** (everyone on their Pi):
-```bash
-# First time setup - create virtual environment
-cd "Lab 6"
-python -m venv .venv
-source .venv/bin/activate
-pip install -r requirements-pi.txt
-
-# Run the publisher
-python pixel_grid_publisher.py
-```
-
-Hold colored objects near sensor to change your pixel!
-
-![Pixel grid with two devices](imgs/two-devices-grid.png)
-
 **📸 Include: Screenshot of grid + photo of your Pi setup**
+![微信图片_20251110000629_213_392](https://github.com/user-attachments/assets/bc7a513b-0eca-45ba-aa99-f1c021a5af58)
 
 ---
 
