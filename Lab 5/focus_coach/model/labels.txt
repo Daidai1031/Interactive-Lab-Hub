@@ -1,0 +1,5 @@
+0 typing
+1 writing
+2 drink
+3 idle
+4 phone
