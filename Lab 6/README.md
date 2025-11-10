@@ -7,9 +7,9 @@
 Build interactive systems where **multiple devices communicate over a network** using MQTT messaging. Work in teams of 3+ with Raspberry Pis.
 
 **Parts:**
-- A: Learn MQTT messaging
-- B: Try collaborative pixel grid demo  
-- C: Build your own distributed system
+- [A: Learn MQTT messaging](#part-a-mqtt-messaging)
+- [B: Try collaborative pixel grid demo](#part-b-collaborative-pixel-grid)  
+- [C: Build your own distributed system](#part-c-make-your-own)
 
 ## Part A: MQTT Messaging
 
