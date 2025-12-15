@@ -17,7 +17,7 @@ Please place links here to the README.md's for each of your labs here:
 
 [Lab 6. Little Interactions Everywhere](https://github.com/Daidai1031/Interactive-Lab-Hub/tree/Fall2025/Lab%206)
 
-Final Project
+[Final Project](https://github.com/Daidai1031/Interactive-Lab-Hub/blob/Fall2025/Final.md)
 
 Online Repository
 
