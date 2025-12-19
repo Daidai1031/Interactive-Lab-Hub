@@ -226,7 +226,7 @@ The final submission will include:
 
 ---
 
-## 📋 Progress Logs
+## 📋 Progress Logs - Expand to see details (photos & videos)
 
 <details><summary><strong>11/15 Log</strong> — Core pipeline working: touch → audio → display</summary>
 
